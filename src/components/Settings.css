@@ -1,0 +1,57 @@
+.settingsPage{
+    background-color: black;
+    padding: 3%;
+    width: 20vw;
+}
+.companyNameBox{
+    margin-left: 15px;
+    border-radius: 0px;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    background-color: rgb(41, 41, 41);
+}
+.fieldItems{
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    margin-left: -50px;
+}
+.fieldItems li{
+    list-style: none;
+    margin:3px;
+    font-size: 15px;
+    color: black;
+    background-color: white;
+    border-radius: 5px;
+    padding: 1%;
+}
+.fieldItems li img{
+    width: 20px;
+}
+.fieldItems li button{
+    border: none;
+    cursor:pointer;
+}
+.addbtn{
+    transition: 0.2s;
+}
+.addbtn:hover{
+    transform: scale(1.2);
+    transition: 0.2s;
+}
+.FieldBtn{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+    
+}
+.FieldBtn button{
+    color: black;
+    padding: 1%;
+    border: none;
+    background-color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px;
+}

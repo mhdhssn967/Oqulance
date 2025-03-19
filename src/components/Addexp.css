@@ -1,0 +1,20 @@
+.addExp{
+    display: flex;
+    margin-left: 3%;
+    align-items: center;
+}
+.add{
+    padding: 0.5%;
+    margin: 10px;
+    color: black;
+    font-weight: 300;
+    background-color: white;
+    border-radius: 10px;
+    border: none;
+    transition: 0.2s;
+    cursor: pointer;
+}
+.add:hover{
+    transform: scale(1.1);
+    transition: 0.2s;
+}

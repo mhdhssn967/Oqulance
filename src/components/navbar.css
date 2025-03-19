@@ -1,0 +1,13 @@
+.navmain{
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.navmain img{
+    width: 10%;
+}
+.logo{
+    display: flex;
+    align-items: center;
+}
