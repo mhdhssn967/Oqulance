@@ -62,12 +62,11 @@
   }
   
   .cancel-button {
-    background: gray;
+    background: rgb(0, 0, 0);
     color: white;
   }
   
   .add-button {
-    background: #000000;
-    color: rgb(255, 255, 255);
+    background: #ffffff;
+    color: rgb(0, 0, 0);
   }
-  

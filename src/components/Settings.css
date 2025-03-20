@@ -43,8 +43,7 @@
 .FieldBtn{
     display: flex;
     justify-content: center;
-    margin: 10px;
-    
+    margin: 10px; 
 }
 .FieldBtn button{
     color: black;

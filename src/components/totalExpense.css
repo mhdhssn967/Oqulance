@@ -8,6 +8,7 @@
     justify-content: center;
     align-items: center;
     border: solid white 0.5px;
+    height: 200px;
 }
 .timeFrame{
     margin: 10px;

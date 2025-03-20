@@ -1,24 +1,17 @@
-import React, { useState } from 'react'
-import Navbar from './components/Navbar'
-import ExpenseTable from './components/ExpenseTable'
-import DisplayExpense from './components/DisplayExpense'
-import setting from './assets/setting.png'
-import close from './assets/close.png'
-import Settings from './components/Settings'
-import './App.css'
-import HomePage from './pages/HomePage'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import HomePage from "./pages/HomePage"; 
 
-export const App = () => {
-
-  const [settingsView, setSettingsView] = useState(0)
-
+const App = () => {
   return (
-    <div>
-        <HomePage/>
-    </div>
-  )
-}
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<HomePage />} />
+      </Routes>
+    </Router>
+  );
+};
 
-
-
-export default App
+export default App;

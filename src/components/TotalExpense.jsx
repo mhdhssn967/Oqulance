@@ -1,13 +1,13 @@
 import React from 'react'
 import './totalExpense.css'
 
-const TotalExpense = () => {
+const TotalExpense = ({total}) => {
   return (
     <>
     <div className='totalContainer'>
         <h1>Total Expense</h1>
         <button className='timeFrame'>Select Time Frame</button>
-        <h1>$56776.34</h1>
+        <h1>₹{total}</h1>
     </div>
     </>
   )
