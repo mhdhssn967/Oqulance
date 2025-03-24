@@ -4,7 +4,7 @@ import { auth, db } from "../firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
-const AddExpenseModal = ({ isOpen, onClose }) => {
+const AddExpenseModal = ({ isOpen, onClose,onExpenseAdded}) => {
   if (!isOpen) return null;
 
   const [expenseDetails, setExpenseDetails]=useState({date:"",category:"",type:"",service:"",amount:"",remarks:""})
@@ -44,8 +44,8 @@ const AddExpenseModal = ({ isOpen, onClose }) => {
         remarks,
         createdAt: new Date(),
       });
-      alert("Expense added successfully");
       onClose()
+      onExpenseAdded()
     }catch(error){
       console.log("Error while adding expense",error);
       alert("Failed to add response")

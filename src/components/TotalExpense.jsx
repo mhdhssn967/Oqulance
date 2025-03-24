@@ -6,7 +6,6 @@ const TotalExpense = ({total}) => {
     <>
     <div className='totalContainer'>
         <h1>Total Expense</h1>
-        <button className='timeFrame'>Select Time Frame</button>
         <h1>₹{total}</h1>
     </div>
     </>

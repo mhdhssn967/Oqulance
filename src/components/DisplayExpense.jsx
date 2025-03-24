@@ -29,7 +29,8 @@ const DisplayExpense = () => {
         <h1>Reimbursement</h1>
         <h2>$560</h2>
       </div>
-      </div></>
+      </div>
+      </>
   )
 }
 

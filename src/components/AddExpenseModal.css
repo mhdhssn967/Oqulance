@@ -7,18 +7,19 @@
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
     display: flex;
-    align-items: center;
     justify-content: center;
   }
   
   /* Modal Content */
   .modal-content {
+    position: sticky;
+    top: 200px;
     background: #222;
     padding: 20px;
     border-radius: 10px;
     width: 350px;
+    height: fit-content;
     text-align: center;
-    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
   }
   
   /* Modal Heading */
@@ -59,14 +60,21 @@
     border-radius: 5px;
     cursor: pointer;
     width: 45%;
+
   }
   
   .cancel-button {
     background: rgb(0, 0, 0);
     color: white;
+    transition: 0.1s;
   }
   
   .add-button {
     background: #ffffff;
     color: rgb(0, 0, 0);
+    transition: 0.1s;
+  }
+  button:hover{
+    transform: scale(1.1);
+    transition: 0.1s;
   }

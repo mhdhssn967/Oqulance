@@ -11,7 +11,7 @@ const HomePage = () => {
     const [settingsView, setSettingsView] = useState(0)
   return (
     <>
-<Navbar/>
+<div><Navbar/></div>
 
 {settingsView==1&&
 <div className='settingsDiv'><Settings /></div>}
@@ -23,7 +23,6 @@ const HomePage = () => {
         <h1 style={{fontSize:'75px', fontWeight:'400'}}>Oqulance</h1>
         <h1 style={{fontSize:'25px', fontWeight:'100'}}>Track and optimize company expenses with ease.</h1>
       </div>
-      {/* <h2 style={{margin:'3% 2% 1% 2%',fontSize:'35px'}}>Company Name</h2> */}
     </div>
     <ExpenseTable/>
     <DisplayExpense/>

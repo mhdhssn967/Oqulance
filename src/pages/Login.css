@@ -39,9 +39,9 @@
   /* Button */
   .login-button {
     width: 100%;
-    background: #ffffff;
-    color: rgb(0, 0, 0);
-    border: none;
+    background-color: black;
+    color: rgb(255, 255, 255);
+    border: solid white 0.5px;
     padding: 12px;
     border-radius: 5px;
     cursor: pointer;
@@ -51,7 +51,8 @@
   
   .login-button:hover {
     background: #ffffff;
-    transform: scale(1.05);
+    /* transform: scale(1.05); */
+    color: black;
   }
   
   /* Forgot Password */
