@@ -16,6 +16,7 @@ import close from '../assets/close.png'
 const ExpenseTable = () => {
 
   const [expenses, setExpenses] = useState([])
+  const [revenue, setRevenue] = useState([])
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [monthlyTotal, setMonthlyTotal] = useState(0)
   const [insightOpen,setInsightOpen]=useState(0)

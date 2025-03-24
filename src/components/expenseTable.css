@@ -34,6 +34,7 @@ table th,td{
 table tr{
     background-color: rgb(105, 104, 101);
     transition: 0.2s;
+    cursor: pointer;
 }
 .tableDiv tr:hover{
     transform: scale(1.03);
