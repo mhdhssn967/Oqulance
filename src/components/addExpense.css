@@ -2,19 +2,33 @@
     display: flex;
     margin-left: 3%;
     align-items: center;
+    justify-content: left;
 }
 .add{
-    padding: 0.5%;
+    padding: 2%;
     margin: 10px;
-    color: black;
+    color: rgb(255, 255, 255);
     font-weight: 300;
-    background-color: white;
+    display: flex;
+    align-items: center;
+    background: none;
     border-radius: 10px;
-    border: none;
+    width: 150px;
+    border: solid white 0.5px;
     transition: 0.2s;
     cursor: pointer;
 }
 .add:hover{
-    transform: scale(1.1);
     transition: 0.2s;
+    color: black;
+    background-color: white;
+}
+.add img{
+    filter: invert(1);
+}
+.add:hover img{
+    filter: none;
+}
+.add:active{
+    transform: scale(0.9);
 }

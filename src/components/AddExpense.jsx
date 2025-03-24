@@ -12,9 +12,8 @@ const AddExpense = ({onExpenseAdded}) => {
   return (
     <>
     <div className='addExp'>
-    <h2>Expense Overview Table</h2>
-    <button style={{display:'flex',alignItems:'center'}} className='add' onClick={() => setExpenseModalOpen(true)}> <img style={{width:'20px',marginRight:'5px'}} src={addexp} alt="" /> Add New Expense</button>
-    <button style={{display:'flex',alignItems:'center'}} className='add' onClick={() => setRevenueModalOpen(true)}> <img style={{width:'20px',marginRight:'5px'}} src={revenueImg} alt="" /> Add New Revenue</button>
+    <button className='add' onClick={() => setExpenseModalOpen(true)}> <img style={{width:'20px',marginRight:'5px'}} src={addexp} alt="" /> Add New Expense</button>
+    <button className='add' onClick={() => setRevenueModalOpen(true)}> <img style={{width:'20px',marginRight:'5px'}} src={revenueImg} alt="" /> Add New Revenue</button>
 
     </div>
     <AddExpenseModal onExpenseAdded={onExpenseAdded} isOpen={expenseModalOpen} onClose={() => setExpenseModalOpen(false)} />

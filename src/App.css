@@ -2,10 +2,6 @@ body{
     /* background-color: rgb(39, 38, 38); */
 }
 button:hover{
-    transform: scale(1.1);
     transition: 0s;
+    transform: scale(1.5);
 }
-button{
-    transition: 0s;
-}
-

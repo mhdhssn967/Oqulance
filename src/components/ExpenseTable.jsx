@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import './expenseTable.css'
-import TotalExpense from './TotalExpense'
 import AddExpense from './AddExpense'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
 import { auth, db } from '../firebaseConfig'
-import { tr } from 'framer-motion/client'
-import { setUserId } from 'firebase/analytics'
 import edit from '../assets/edit.png'
 import deleteImg from '../assets/delete.png'
 import ExpenseInsights from './ExpenseInsights'
@@ -17,16 +14,26 @@ const ExpenseTable = () => {
 
   const [expenses, setExpenses] = useState([])
   const [revenue, setRevenue] = useState([])
+  const [revenueTotal, setRevenueTotal] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [monthlyTotal, setMonthlyTotal] = useState(0)
+  const [monthlyTotalRevenue, setMonthlyTotalRevenue] = useState(0)
+  const [view, setView] = useState("all")
+  const [editExpense, setEditExpense]=useState(0)
+
+  console.log(view);
+  
+
   const [insightOpen,setInsightOpen]=useState(0)
 
   const [triggerFetch, setTriggerFetch] = useState(false);
 
   useEffect(() => {
     const total = expenses.reduce((sum, expense) => sum + Number(expense.amount || 0), 0);
+    const totalRevenue = revenue.reduce((sum, revenue)=> sum +Number(revenue.amount || 0), 0);
     setTotalExpenses(total);
-  }, [expenses]);
+    setRevenueTotal(totalRevenue)
+  }, [expenses,revenue]);
 
 
   useEffect(() => {
@@ -39,30 +46,48 @@ const ExpenseTable = () => {
       return year === currentYear && month == currentMonth;
     })
     setMonthlyTotal(filteredData.reduce((sum, expense) => sum + Number(expense.amount || 0), 0))
-  }, [JSON.stringify(expenses)])
+
+    const filteredDataRevenue = revenue.filter(rev => {
+      const [year, month] = rev.date.split("-").map(Number);
+      return year === currentYear && month == currentMonth;
+    })
+    setMonthlyTotalRevenue(filteredDataRevenue.reduce((sum, revenue) => sum + Number(revenue.amount || 0), 0))
+  }, [JSON.stringify(revenue)])
 
 
+  
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (!user) {
-        setExpenses([]); // No user logged in
+        setExpenses([]); 
+        setRevenue([]);// No user logged in
         return;
       }
 
-      console.log("Fetching expenses for:", user.uid);
+      console.log("Fetching revenue & expenses for:", user.uid);
 
       const userExpensesRef = collection(db, `users/${user.uid}/expenses`);
+      const userRevenueRef = collection(db, `users/${user.uid}/revenue`);
+
       const q = query(userExpensesRef, orderBy("date", "desc")); // Order By Date
+      const p = query(userRevenueRef, orderBy("date", "desc")); // Order By Date
 
       try {
         const querySnapshot = await getDocs(q);
+        const querySnapshotRevenue = await getDocs(p)
         const expensesList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        const revenueList = querySnapshotRevenue.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
 
         console.log("Fetched expenses:", expensesList);
         setExpenses(expensesList);
+        console.log("Fetched revenue:", revenueList);
+        setRevenue(revenueList);
       } catch (error) {
         console.error("Error fetching expenses:", error);
       }
@@ -78,15 +103,37 @@ const ExpenseTable = () => {
 
   return (
     <>
-      <AddExpense onExpenseAdded={handleExpenseAdded} />
       {insightOpen==1&&
         <div className='insightsDiv'><ExpenseInsights expenses={expenses} setInsightOpen={setInsightOpen} /></div>}
       <div className='insightButtons'>
-        <h3 className='monthExp'>Total expense of this month : ₹{monthlyTotal}</h3>
-        <button onClick={()=>setInsightOpen(1)}> <img style={{ width: '20px', marginRight: '5px' }} src={insightImg} alt="" />View Expense Insights</button>
+          <table>
+           <table>
+              <tr><td>Total expense of this month</td> <td>: ₹{monthlyTotal}</td></tr>
+            <tr><td>Total revenue generated this month</td> <td>: ₹{monthlyTotalRevenue}</td></tr>
+               <tr><td>Gross expenses:</td><td>: ₹{totalExpenses}</td></tr>
+               <tr><td>Gross revenue:</td><td>: ₹{revenueTotal}</td></tr>
+               <tr><td><button onClick={()=>setInsightOpen(1)}> View Insights</button>
+               </td></tr>
+           </table>
+          </table>
       </div>    
-
-      <div className='tableDiv'>
+      
+      <div style={{display:'flex',justifyContent:'space-between',marginRight:'50px',alignItems:'center'}}><AddExpense onExpenseAdded={handleExpenseAdded} />
+      <div>
+        View <select name="" id="" onChange={(e)=>setView(e.target.value)}>
+          <option value="all">All</option>
+          <option value="expenses">Expenses</option>
+          <option value="revenue">Revenue</option>
+        </select>
+      </div>
+      </div>
+      
+      
+{/* \Expense table */}
+      
+        {(view=="all" || view=="expenses")&&(
+          <div className='tableDiv'>
+        <h2>Expense Overview</h2>
         <table>
           <thead>
             <th>#</th>
@@ -109,21 +156,60 @@ const ExpenseTable = () => {
                   <td>{expense.service || "N/A"}</td>
                   <td>₹{expense.amount || "0"}</td>
                   <td>{expense.remarks || "N/A"}</td>
-                  <td className='actionCell'><img src={edit} alt="" /> <img src={deleteImg} alt="" /></td>
+                  <td className='actionCell'><img src={edit} alt="" onClick={()=>setEditExpense(1)} /> <img src={deleteImg} alt="" /></td>
                 </tr>))) :
               (
                 <tr>
-                  <td colSpan="7" style={{ textAlign: 'center' }}>No expenses found</td>
+                  <td colSpan="7" style={{ textAlign: 'center' }}>No record found</td>
                 </tr>
               )
             }
           </tbody>
-
         </table>
-        <TotalExpense total={totalExpenses} />
-      </div>
+        </div>)}
+  
+
+
+{/* Revenue Table */}
+
+
+{(view=="revenue" || view=="all") &&
+          <div className='tableDiv'>
+            <h2>Revenue Overview</h2>
+            <table>
+              <thead>
+              <th>#</th>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Service</th>
+                <th>Amount</th>
+                <th>Remarks</th>
+                <th>Actions</th>
+              </thead>
+              <tbody>
+              {
+      revenue.length> 0 && (
+        revenue.map((revenue, index)=>(
+          <tr key={revenue.id}>
+            <td>{index + 1}</td>
+          <td>{revenue.date || "N/A"}</td>
+          <td>{revenue.type || "N/A"}</td>
+          <td>{revenue.service || "N/A"}</td>
+          <td>₹{revenue.amount || "0"}</td>
+          <td>{revenue.remarks || "N/A"}</td>
+          <td className='actionCell'><img src={edit} alt="" /> <img src={deleteImg} alt="" /></td>
+          </tr>
+        ))
+      )
+    }
+  
+              </tbody>
+            </table>
+          </div>
+}
     </>
   )
 }
 
 export default ExpenseTable
+
