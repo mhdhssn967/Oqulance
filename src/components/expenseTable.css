@@ -10,11 +10,11 @@ option{
     border: solid 1px white;
 }
 .tableDiv{
-    margin-left: 3%;
+    margin-left: 1%;
     display: flex;
     flex-direction: column;
     align-items: left;
-    width: 95%;
+    width: 98%;
 }
 table{
     text-align: left;

@@ -3,6 +3,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import useFetchExpenses from "../services/useFetchExpenses";
 import useFetchRevenue from "../services/useFetchRevenue";
 import { processDataByCategory, processDataByService, processDataByType } from "../utils/processFinanceData";
+import './ExpenseChart.css'
 
 
 
@@ -69,7 +70,7 @@ const ExpenseChart = () => {
   
           {/* Bar Charts  Expenses */}
           {/* Expense by service */}
-          <div style={{ width: "80%", height: 300, color: 'black', margin: '5%', display: 'flex' }}>
+          <div className="barCharts" style={{ width: "80%", height: 300, color: 'black', margin: '5%', display: 'flex' }}>
             <ResponsiveContainer width="100%" height="100%" style={{ marginRight: '7%' }}>
               <h2>Expenses by Service</h2>
               <BarChart data={expenseByService}>
@@ -127,7 +128,7 @@ const ExpenseChart = () => {
   
           {/* Bar charts */}
           {/* Reenue by service */}
-          <div style={{ width: "80%", height: 300, color: 'black', margin: '5%', display: 'flex', justifyContent:'center' }}>
+          <div className="barCharts" style={{ width: "80%", height: 300, color: 'black', margin: '5%', display: 'flex', justifyContent:'center' }}>
             <ResponsiveContainer width="100%" height="100%" style={{ marginRight: '7%' }}>
               <h2>Revenue Generated via Service</h2>
               <BarChart data={revenueByService}>
