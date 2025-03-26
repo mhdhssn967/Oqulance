@@ -70,7 +70,7 @@ const ExpenseChart = () => {
           {/* Bar Charts  Expenses */}
           {/* Expense by service */}
           <div style={{ width: "80%", height: 300, color: 'black', margin: '5%', display: 'flex' }}>
-            <ResponsiveContainer width="30%" height="100%" style={{ marginRight: '7%' }}>
+            <ResponsiveContainer width="100%" height="100%" style={{ marginRight: '7%' }}>
               <h2>Expenses by Service</h2>
               <BarChart data={expenseByService}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -82,7 +82,7 @@ const ExpenseChart = () => {
             </ResponsiveContainer>
   
             {/* Expense by type */}
-            <ResponsiveContainer width="30%" height="100%" style={{ marginRight: '7%' }}>
+            <ResponsiveContainer width="100%" height="100%" style={{ marginRight: '7%' }}>
               <h2>Expenses by Type</h2>
               <BarChart data={expenseByType}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -94,7 +94,7 @@ const ExpenseChart = () => {
             </ResponsiveContainer>
   
             {/* Expense by category */}
-            <ResponsiveContainer width="30%" height="100%" style={{ marginRight: '7%' }}>
+            <ResponsiveContainer width="100%" height="100%" style={{ marginRight: '7%' }}>
               <h2>Expenses by Category</h2>
               <BarChart data={expenseByCategory}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -128,7 +128,7 @@ const ExpenseChart = () => {
           {/* Bar charts */}
           {/* Reenue by service */}
           <div style={{ width: "80%", height: 300, color: 'black', margin: '5%', display: 'flex', justifyContent:'center' }}>
-            <ResponsiveContainer width="30%" height="100%" style={{ marginRight: '7%' }}>
+            <ResponsiveContainer width="100%" height="100%" style={{ marginRight: '7%' }}>
               <h2>Revenue Generated via Service</h2>
               <BarChart data={revenueByService}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -140,7 +140,7 @@ const ExpenseChart = () => {
             </ResponsiveContainer>
   
           {/* Revenue by Type */}
-            <ResponsiveContainer width="30%" height="100%" style={{ marginRight: '7%' }}>
+            <ResponsiveContainer width="100%" height="100%" style={{ marginRight: '7%' }}>
               <h2>Revenue Generated via Type</h2>
               <BarChart data={revenueByType}>
                 <CartesianGrid strokeDasharray="3 3" />

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import './HomePage.css'
 import Navbar from '../components/Navbar'
 import ExpenseTable from '../components/ExpenseTable'
-import DisplayExpense from '../components/DisplayExpense'
 import setting from '../assets/setting.png'
 import close from '../assets/close.png'
 import Settings from '../components/Settings'
@@ -26,7 +25,6 @@ const HomePage = () => {
       </div>
     </div>
     <ExpenseTable/>
-    <DisplayExpense/>
     </div>
     </>
   )
