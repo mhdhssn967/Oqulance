@@ -6,9 +6,9 @@ import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
 import { auth, db } from '../firebaseConfig'
 import edit from '../assets/edit.png'
 import deleteImg from '../assets/delete.png'
-import ExpenseInsights from './ExpenseInsights'
 import insightImg from '../assets/exp.png'
 import close from '../assets/close.png'
+import { Link } from 'react-router-dom'
 
 const ExpenseTable = () => {
 
@@ -23,9 +23,6 @@ const ExpenseTable = () => {
 
   console.log(view);
   
-
-  const [insightOpen,setInsightOpen]=useState(0)
-
   const [triggerFetch, setTriggerFetch] = useState(false);
 
   useEffect(() => {
@@ -103,8 +100,6 @@ const ExpenseTable = () => {
 
   return (
     <>
-      {insightOpen==1&&
-        <div className='insightsDiv'><ExpenseInsights expenses={expenses} setInsightOpen={setInsightOpen} /></div>}
       <div className='insightButtons'>
           <table>
            <table>
@@ -112,7 +107,7 @@ const ExpenseTable = () => {
             <tr><td>Total revenue generated this month</td> <td>: ₹{monthlyTotalRevenue}</td></tr>
                <tr><td>Gross expenses:</td><td>: ₹{totalExpenses}</td></tr>
                <tr><td>Gross revenue:</td><td>: ₹{revenueTotal}</td></tr>
-               <tr><td><button onClick={()=>setInsightOpen(1)}> View Insights</button>
+               <tr><td><Link to="/home/insights"><button onClick={()=>setInsightOpen(1)}> View more Insights</button></Link>
                </td></tr>
            </table>
           </table>

@@ -1,22 +1,18 @@
 import React from 'react'
 import './insights.css'
 import ExpenseChart from "../components/ExpenseChart";
-import useFetchExpenses from '../services/useFetchExpenses';
+import Navbar from '../components/Navbar';
 
-
-const Insights = () => {
-  const expenses=useFetchExpenses()
-  console.log("in insights",expenses);
-  
+const Insights = () => {  
   return (
-    <div>
+    <>
+      <div><Navbar/></div>
       <div>
-      <h1>Expense Insights</h1>
-      <p>Here, you will see graphical representations of your expenses.</p>
+      <h1 style={{fontSize:'60px', fontWeight:'100', textAlign:'center'}}>Financial Insights</h1>
       {/* Expense Growth Chart */}
       <ExpenseChart />
     </div>
-    </div>
+    </>
   )
 }
 
