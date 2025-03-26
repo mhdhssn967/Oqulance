@@ -1,5 +1,5 @@
 @media (max-width: 768px){
-    .barcharts{
+    .barCharts{
         display: flex;
         flex-direction: column;
     }
