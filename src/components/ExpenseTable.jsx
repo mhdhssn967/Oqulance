@@ -9,6 +9,7 @@ import deleteImg from '../assets/delete.png'
 import insightImg from '../assets/exp.png'
 import close from '../assets/close.png'
 import { Link } from 'react-router-dom'
+import { deleteData } from '../services/services'
 
 const ExpenseTable = () => {
 
@@ -19,9 +20,6 @@ const ExpenseTable = () => {
   const [monthlyTotal, setMonthlyTotal] = useState(0)
   const [monthlyTotalRevenue, setMonthlyTotalRevenue] = useState(0)
   const [view, setView] = useState("all")
-  const [editExpense, setEditExpense]=useState(0)
-
-  console.log(view);
   
   const [triggerFetch, setTriggerFetch] = useState(false);
 
@@ -61,8 +59,6 @@ const ExpenseTable = () => {
         return;
       }
 
-      console.log("Fetching revenue & expenses for:", user.uid);
-
       const userExpensesRef = collection(db, `users/${user.uid}/expenses`);
       const userRevenueRef = collection(db, `users/${user.uid}/revenue`);
 
@@ -81,9 +77,9 @@ const ExpenseTable = () => {
           ...doc.data(),
         }));
 
-        console.log("Fetched expenses:", expensesList);
+        // console.log("Fetched expenses:", expensesList);
         setExpenses(expensesList);
-        console.log("Fetched revenue:", revenueList);
+        // console.log("Fetched revenue:", revenueList);
         setRevenue(revenueList);
       } catch (error) {
         console.error("Error fetching expenses:", error);
@@ -95,6 +91,21 @@ const ExpenseTable = () => {
 
   const handleExpenseAdded = () => {
     setTriggerFetch((prev) => !prev);
+  };
+
+  const handleDeleteData = async (type,id) => {
+   
+    const confirmDelete = window.confirm(`Are you sure you want to delete this ${type}?`);
+    if (confirmDelete) {
+      try {
+        await deleteData(type,id);
+        alert("Expense deleted successfully!");
+        setTriggerFetch((prev) => !prev);
+      } catch (error) {
+        alert("Failed to delete expense.");
+        console.error(error);
+      }
+    }
   };
 
 
@@ -113,7 +124,7 @@ const ExpenseTable = () => {
           </table>
       </div>    
       
-      <div style={{display:'flex',justifyContent:'space-between',marginRight:'50px',alignItems:'center'}}><AddExpense onExpenseAdded={handleExpenseAdded} />
+      <div style={{display:'flex',justifyContent:'space-between',marginRight:'150px',alignItems:'center'}}><AddExpense onExpenseAdded={handleExpenseAdded} />
       <div>
         View <select name="" id="" onChange={(e)=>setView(e.target.value)}>
           <option value="all">All</option>
@@ -151,11 +162,11 @@ const ExpenseTable = () => {
                   <td>{expense.service || "N/A"}</td>
                   <td>₹{expense.amount || "0"}</td>
                   <td>{expense.remarks || "N/A"}</td>
-                  <td className='actionCell'><img src={edit} alt="" onClick={()=>setEditExpense(1)} /> <img src={deleteImg} alt="" /></td>
+                  <td className='actionCell'><img src={edit} alt=""  /> <img onClick={()=>handleDeleteData('expenses',expense.id)} src={deleteImg} alt="" /></td>
                 </tr>))) :
               (
                 <tr>
-                  <td colSpan="7" style={{ textAlign: 'center' }}>No record found</td>
+                  <td colSpan="8" style={{ textAlign: 'center' }}>No record found</td>
                 </tr>
               )
             }
@@ -192,7 +203,7 @@ const ExpenseTable = () => {
           <td>{revenue.service || "N/A"}</td>
           <td>₹{revenue.amount || "0"}</td>
           <td>{revenue.remarks || "N/A"}</td>
-          <td className='actionCell'><img src={edit} alt="" /> <img src={deleteImg} alt="" /></td>
+          <td className='actionCell'><img src={edit} alt="" /> <img onClick={()=>handleDeleteData('revenue',revenue.id)} src={deleteImg} alt="" /></td>
           </tr>
         ))
       )

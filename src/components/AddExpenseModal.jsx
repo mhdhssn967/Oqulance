@@ -63,21 +63,38 @@ const AddExpenseModal = ({ isOpen, onClose,onExpenseAdded}) => {
             <option default selected disabled>Select Category</option>
             <option value="Salary">Salary</option>
             <option value="Events">Events</option>
-            <option value="Reimbursement">Reimbursement</option>
+            <option value="Allowance">Allowance</option>
+            <option value="Lodging Expenses">Lodging Expenses</option>
+            <option value="Purchase">Purchase</option>
+            <option value="Utility">Utility</option>
+            <option value="Fixed Assets">Fixed Assets</option>
+            <option value="Consumables">Consumables</option>
+            <option value="Promotions">Promotions</option>
+            <option value="Repairs & Maintenance">Repairs & Maintenance</option>
+            <option value="Travel Expense">Travel Expense</option>
+
+
+
           </select>
 
           <select onChange={(e)=>setExpenseDetails({...expenseDetails,type:e.target.value})} className="input-field">
           <option default selected disabled>Select Type</option>
             <option value="Tech">Tech</option>
-            <option value="Sales & Marketing">Sales & Marketing</option>
+            <option value="Business Development">Business Development</option>
+            <option value="Operations & Administration">Operations & Administration</option>
             <option value="Services">Services</option>
+            <option value="Office Expense">Office Expense</option>
+
           </select>
 
           <select onChange={(e)=>setExpenseDetails({...expenseDetails,service:e.target.value})} className="input-field">
           <option default selected disabled>Select Service</option>
-            <option value="Utility">Utility</option>
             <option value="AR School">AR School</option>
             <option value="Happy Moves">Happy Moves</option>
+            <option value="General">General</option>
+
+
+
           </select>
 
           <input onChange={(e)=>setExpenseDetails({...expenseDetails,amount:e.target.value})} type="number" placeholder="Amount" className="input-field" />
