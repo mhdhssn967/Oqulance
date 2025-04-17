@@ -73,6 +73,7 @@ const AddExpenseModal = ({ isOpen, onClose,onExpenseAdded}) => {
             <option value="Promotions">Promotions</option>
             <option value="Repairs & Maintenance">Repairs & Maintenance</option>
             <option value="Travel Expense">Travel Expense</option>
+            <option value="Legal complainces">Legal complainces</option>
           </select>
 
           <select onChange={(e)=>setExpenseDetails({...expenseDetails,type:e.target.value})} className="input-field">
