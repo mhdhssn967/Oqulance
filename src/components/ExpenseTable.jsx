@@ -118,7 +118,7 @@ const ExpenseTable = () => {
             <tr><td>Total revenue generated this month</td> <td>: ₹{monthlyTotalRevenue}</td></tr>
                <tr><td>Gross expenses:</td><td>: ₹{totalExpenses}</td></tr>
                <tr><td>Gross revenue:</td><td>: ₹{revenueTotal}</td></tr>
-               <tr><td><Link to="/home/insights"><button onClick={()=>setInsightOpen(1)}> View more Insights</button></Link>
+               <tr><td><Link to="/home/insights"><button> View more Insights</button></Link>
                </td></tr>
            </table>
           </table>

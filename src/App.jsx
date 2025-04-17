@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate, BrowserRouter } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom"; // Removed unnecessary BrowserRouter import
 import { auth } from "./firebaseConfig"; // Import Firebase auth
 import Login from "./pages/Login";
-import HomePage from "./pages/HomePage"; 
+import HomePage from "./pages/HomePage";
 import Insights from "./pages/Insights";
 
 const App = () => {
@@ -10,33 +10,52 @@ const App = () => {
   const navigate = useNavigate(); // Hook to navigate to different routes
 
   useEffect(() => {
+    const savedAuthState = localStorage.getItem("isAuthenticated");
+  
+    const currentPath = window.location.pathname;
+  
+    if (savedAuthState === "true") {
+      setIsAuthenticated(true);
+      if (currentPath === "/" || currentPath === "/login") {
+        navigate("/home");
+      }
+    } else {
+      setIsAuthenticated(false);
+      if (currentPath !== "/") {
+        navigate("/");
+      }
+    }
+  
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        setIsAuthenticated(true); // Set user as authenticated
-        navigate("/home"); // Navigate to HomePage when logged in
+        setIsAuthenticated(true);
+        localStorage.setItem("isAuthenticated", "true");
+        if (currentPath === "/" || currentPath === "/login") {
+          navigate("/home");
+        }
       } else {
-        setIsAuthenticated(false); // Set user as not authenticated
-        navigate("/"); // Navigate to Login page when not logged in
+        setIsAuthenticated(false);
+        localStorage.setItem("isAuthenticated", "false");
+        if (currentPath !== "/") {
+          navigate("/");
+        }
       }
     });
-
-    return () => unsubscribe(); // Clean up the listener when component unmounts
+  
+    return () => unsubscribe();
   }, [navigate]);
+  
 
   if (isAuthenticated === null) {
     return <div>Loading...</div>; // Show loading state while checking auth status
   }
 
   return (
-  
-      
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/home/insights" element={<Insights />} />
-        </Routes>
-     
-  
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/home" element={<HomePage />} />
+      <Route path="/home/insights" element={<Insights />} />
+    </Routes>
   );
 };
 
