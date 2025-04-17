@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    padding: 1%;
 }
 .navmain img{
     width: 10%;

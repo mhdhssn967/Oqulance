@@ -20,7 +20,7 @@ const HomePage = () => {
  <div style={settingsView==0?{filter:'blur(0px)'}:{filter:'blur(10px)'}}>
     <div style={{marginLeft:'2%'}}>
       <div style={{marginLeft:'2%'}}>
-        <h1 style={{fontSize:'75px', fontWeight:'400'}}>Oqulance</h1>
+        <h1 style={{fontSize:'75px', fontWeight:'400'}}>Oqulix Finance</h1>
         <h1 style={{fontSize:'25px', fontWeight:'100'}}>Track and optimize company expenses with ease.</h1>
       </div>
     </div>

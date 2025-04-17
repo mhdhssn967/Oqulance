@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import OQLogo from '../assets/OQ.jpg'
+import OQLogo from '../assets/OQ.png'
 import './navbar.css'
 
 

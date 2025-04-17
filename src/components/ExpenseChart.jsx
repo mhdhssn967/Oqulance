@@ -3,7 +3,6 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import useFetchExpenses from "../services/useFetchExpenses";
 import useFetchRevenue from "../services/useFetchRevenue";
 import { processDataByCategory, processDataByService, processDataByType } from "../utils/processFinanceData";
-import './ExpenseChart.css'
 
 
 

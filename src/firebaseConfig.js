@@ -9,13 +9,13 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDgiY7yY3bnQgQAT18Ns3htjTcfjIxG438",
-  authDomain: "oqulance.firebaseapp.com",
-  projectId: "oqulance",
-  storageBucket: "oqulance.firebasestorage.app",
-  messagingSenderId: "138307888804",
-  appId: "1:138307888804:web:433c12e0e618e134eea831",
-  measurementId: "G-QLE757SNJ9"
+  apiKey: "AIzaSyCmPP2xR6SrF2N9hgqMtdYw7WTBtiynYyc",
+  authDomain: "oqulix-finance.firebaseapp.com",
+  projectId: "oqulix-finance",
+  storageBucket: "oqulix-finance.firebasestorage.app",
+  messagingSenderId: "658879172276",
+  appId: "1:658879172276:web:4a89a72aa06f67b0a911e1",
+  measurementId: "G-D7T35DZVSS"
 };
 
 // Initialize Firebase
@@ -25,3 +25,8 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 export { auth,db };
+
+
+
+
+
