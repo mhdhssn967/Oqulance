@@ -147,6 +147,7 @@ const ExpenseTable = () => {
             <th>Category</th>
             <th>Type</th>
             <th>Service</th>
+            <th>Source</th>
             <th>Amount</th>
             <th>Remarks</th>
             <th>Actions</th>
@@ -160,6 +161,7 @@ const ExpenseTable = () => {
                   <td>{expense.category || "N/A"}</td>
                   <td>{expense.type || "N/A"}</td>
                   <td>{expense.service || "N/A"}</td>
+                  <td>{expense.source || "N/A"}</td>
                   <td>₹{expense.amount || "0"}</td>
                   <td>{expense.remarks || "N/A"}</td>
                   <td className='actionCell'><img src={edit} alt=""  /> <img onClick={()=>handleDeleteData('expenses',expense.id)} src={deleteImg} alt="" /></td>

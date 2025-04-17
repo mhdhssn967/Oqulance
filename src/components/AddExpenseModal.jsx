@@ -7,7 +7,7 @@ import { getAuth } from "firebase/auth";
 const AddExpenseModal = ({ isOpen, onClose,onExpenseAdded}) => {
   if (!isOpen) return null;
 
-  const [expenseDetails, setExpenseDetails]=useState({date:"",category:"",type:"",service:"",amount:"",remarks:""})
+  const [expenseDetails, setExpenseDetails]=useState({date:"",category:"",type:"",service:"",amount:"",remarks:"",source:""})
   console.log(expenseDetails);
   
   const closeModal=()=>{
@@ -25,9 +25,9 @@ const AddExpenseModal = ({ isOpen, onClose,onExpenseAdded}) => {
       return;
     }
 
-    const {date,category,type,service,amount,remarks}=expenseDetails
+    const {date,category,type,service,source,amount,remarks}=expenseDetails
 
-    if (!date || !category || !type || !service || !amount || !remarks) {
+    if (!date || !category || !type || !service || !amount ) {
       alert("Fill the form completely");
       return;
     }
@@ -40,6 +40,7 @@ const AddExpenseModal = ({ isOpen, onClose,onExpenseAdded}) => {
         category,
         type,
         service,
+        source,
         amount,
         remarks,
         createdAt: new Date(),
@@ -72,9 +73,6 @@ const AddExpenseModal = ({ isOpen, onClose,onExpenseAdded}) => {
             <option value="Promotions">Promotions</option>
             <option value="Repairs & Maintenance">Repairs & Maintenance</option>
             <option value="Travel Expense">Travel Expense</option>
-
-
-
           </select>
 
           <select onChange={(e)=>setExpenseDetails({...expenseDetails,type:e.target.value})} className="input-field">
@@ -92,8 +90,14 @@ const AddExpenseModal = ({ isOpen, onClose,onExpenseAdded}) => {
             <option value="AR School">AR School</option>
             <option value="Happy Moves">Happy Moves</option>
             <option value="General">General</option>
+          </select>
 
-
+          <select onChange={(e)=>setExpenseDetails({...expenseDetails,source:e.target.value})} className="input-field">
+          <option default selected disabled>Source</option>
+            <option value="AR School">Oqulix HDFC</option>
+            <option value="Anjana Ramesh">Anjana Ramesh</option>
+            <option value="Sandeep Pattena">Sandeep Pattena</option>
+            <option value="Vishnuprakash">Vishnuprakash</option>
 
           </select>
 
