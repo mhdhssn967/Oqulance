@@ -60,7 +60,6 @@ const ExpenseChart = () => {
               <LineChart data={expenseDetails}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date" />
-                <YAxis domain={[0, 100000]} />
                 <Tooltip contentStyle={{ backgroundColor: 'black' }} />
                 <Line type="monotone" dataKey="amount" stroke="red" strokeWidth={2} />
               </LineChart>
@@ -118,7 +117,6 @@ const ExpenseChart = () => {
               <LineChart data={revenueDetails}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date" />
-                <YAxis domain={[0, 100000]} />
                 <Tooltip contentStyle={{ backgroundColor: 'black' }} />
                 <Line type="monotone" dataKey="amount" stroke="green" strokeWidth={2} />
               </LineChart>

@@ -1,7 +1,8 @@
 .addExp{
     display: flex;
-    margin-left: 3%;
+    margin-left: 10px;
     align-items: center;
+    width: 1000px;
     justify-content: left;
 }
 .add{

@@ -1,6 +1,6 @@
 select{
     background-color: black;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     border-bottom: solid 1px white;
     transition: 0.3s;
     outline: none;

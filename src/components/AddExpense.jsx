@@ -11,13 +11,14 @@ const AddExpense = ({onExpenseAdded}) => {
 
   return (
     <>
-    <div className='addExp'>
-    <button className='add' onClick={() => setExpenseModalOpen(true)}> <img style={{width:'20px',marginRight:'5px'}} src={addexp} alt="" /> Add New Expense</button>
-    <button className='add' onClick={() => setRevenueModalOpen(true)}> <img style={{width:'20px',marginRight:'5px'}} src={revenueImg} alt="" /> Add New Revenue</button>
-
+    <div style={{display:'flex',flexDirection:'column'}}>
+      <div className='addExp'>
+      <button className='add' onClick={() => setExpenseModalOpen(true)} style={{width:'180px',height:'20px'}}> <img style={{width:'20px',marginRight:'5px'}} src={addexp} alt="" /> Add New Expense</button>
+      <button className='add' onClick={() => setRevenueModalOpen(true)} style={{width:'180px',height:'20px'}}> <img style={{width:'20px',marginRight:'5px'}} src={revenueImg} alt="" /> Add New Revenue</button>
+      </div>
+      <AddExpenseModal onExpenseAdded={onExpenseAdded} isOpen={expenseModalOpen} onClose={() => setExpenseModalOpen(false)} />
+      <AddRevenueModal onExpenseAdded={onExpenseAdded} isOpen={revenueModalOpen} onClose={() => setRevenueModalOpen(false)}/>
     </div>
-    <AddExpenseModal onExpenseAdded={onExpenseAdded} isOpen={expenseModalOpen} onClose={() => setExpenseModalOpen(false)} />
-    <AddRevenueModal onExpenseAdded={onExpenseAdded} isOpen={revenueModalOpen} onClose={() => setRevenueModalOpen(false)}/>
     </>
   )
 }

@@ -124,15 +124,15 @@ const ExpenseTable = () => {
           </table>
       </div>    
       
-      <div style={{display:'flex',justifyContent:'space-between',marginRight:'150px',alignItems:'center'}}><AddExpense onExpenseAdded={handleExpenseAdded} />
-      <div>
+      <div style={{display:'flex',justifyContent:'space-between',marginLeft:'100px',alignItems:'center'}}><AddExpense onExpenseAdded={handleExpenseAdded} /></div>
+      <div style={{marginLeft:'150px'}}>
         View <select name="" id="" onChange={(e)=>setView(e.target.value)}>
           <option value="all">All</option>
           <option value="expenses">Expenses</option>
           <option value="revenue">Revenue</option>
         </select>
       </div>
-      </div>
+      
       
       
 {/* \Expense table */}
