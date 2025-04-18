@@ -9,6 +9,46 @@ import Settings from '../components/Settings'
 
 const HomePage = () => {
     const [settingsView, setSettingsView] = useState(0)
+
+    const expenseCategories = [
+      "Salary",
+      "Events",
+      "Allowance",
+      "Lodging Expenses",
+      "Purchase",
+      "Utility",
+      "Fixed Assets",
+      "Consumables",
+      "Promotions",
+      "Repairs & Maintenance",
+      "Travel Expense",
+      "Food & refreshments",
+      "Legal complainces",
+      "Tax",
+      "GST",
+      "Consultation & Outsourcing",
+      "Incentive"
+    ];
+    const departmentOptions = [
+      "Tech",
+      "Business Development",
+      "Operations & Administration",
+      "Services",
+      "Office Expense"
+    ];
+    const serviceOptions = [
+      "AR School",
+      "Happy Moves",
+      "General"
+    ];
+    const sourceOptions = [
+      "Oqulix HDFC",
+      "Anjana Ramesh",
+      "Sandeep Pattena",
+      "Vishnuprakash"
+    ];
+        
+    
   return (
     <>
 <div><Navbar/></div>
@@ -24,7 +64,7 @@ const HomePage = () => {
         <h1 style={{fontSize:'25px', fontWeight:'100'}}>Track and optimize company expenses with ease.</h1>
       </div>
     </div>
-    <ExpenseTable/>
+    <ExpenseTable expenseCategories={expenseCategories} departmentOptions={departmentOptions} serviceOptions={serviceOptions} sourceOptions={sourceOptions}/>
     </div>
     </>
   )

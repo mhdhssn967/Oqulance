@@ -5,7 +5,7 @@ import addexp from '../assets/addexp.png'
 import AddExpenseModal from './AddExpenseModal';
 import AddRevenueModal from './AddRevenueModal';
 
-const AddExpense = ({onExpenseAdded}) => {
+const AddExpense = ({onExpenseAdded,expenseCategories,departmentOptions, serviceOptions, sourceOptions}) => {
   const [expenseModalOpen, setExpenseModalOpen] = useState(false);
   const [revenueModalOpen, setRevenueModalOpen] = useState(false);
 
@@ -16,7 +16,7 @@ const AddExpense = ({onExpenseAdded}) => {
       <button className='add' onClick={() => setExpenseModalOpen(true)} style={{width:'180px',height:'20px'}}> <img style={{width:'20px',marginRight:'5px'}} src={addexp} alt="" /> Add New Expense</button>
       <button className='add' onClick={() => setRevenueModalOpen(true)} style={{width:'180px',height:'20px'}}> <img style={{width:'20px',marginRight:'5px'}} src={revenueImg} alt="" /> Add New Revenue</button>
       </div>
-      <AddExpenseModal onExpenseAdded={onExpenseAdded} isOpen={expenseModalOpen} onClose={() => setExpenseModalOpen(false)} />
+      <AddExpenseModal onExpenseAdded={onExpenseAdded} isOpen={expenseModalOpen} expenseCategories={expenseCategories} departmentOptions={departmentOptions} serviceOptions={serviceOptions} sourceOptions={sourceOptions} onClose={() => setExpenseModalOpen(false)} />
       <AddRevenueModal onExpenseAdded={onExpenseAdded} isOpen={revenueModalOpen} onClose={() => setRevenueModalOpen(false)}/>
     </div>
     </>

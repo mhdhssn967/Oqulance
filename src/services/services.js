@@ -26,3 +26,32 @@ export const deleteData = async (type,id) => {
 };
 
 export default deleteData;
+
+// filters.js
+
+export const filterExpenses = (allExpenses, filters, searchText) => {
+  const { categoryF, typeF, sourceF, serviceF } = filters;
+  const search = searchText.toLowerCase().trim();
+
+  return allExpenses.filter((item) => {
+    const matchesCategory = categoryF === "All" || item.category === categoryF;
+    const matchesType = typeF === "All" || item.type === typeF;
+    const matchesSource = sourceF === "All" || item.source === sourceF;
+    const matchesService = serviceF === "All" || item.service === serviceF;
+
+    const matchesSearch =
+      !search ||
+      (item.remarks && item.remarks.toLowerCase().includes(search)) ||
+      (item.amount && item.amount.toString().includes(search));
+
+    return (
+      matchesCategory &&
+      matchesType &&
+      matchesSource &&
+      matchesService &&
+      matchesSearch
+    );
+  });
+};
+
+

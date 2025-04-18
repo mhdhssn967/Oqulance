@@ -6,7 +6,7 @@ import { getAuth } from "firebase/auth";
 import Swal from "sweetalert2";
 
 
-const AddExpenseModal = ({ isOpen, onClose,onExpenseAdded}) => {
+const AddExpenseModal = ({ isOpen, onClose,onExpenseAdded, expenseCategories,departmentOptions, serviceOptions, sourceOptions}) => {
   if (!isOpen) return null;
 
   const [expenseDetails, setExpenseDetails]=useState({date:"",category:"",type:"",service:"",amount:"",remarks:"",source:""})
@@ -79,23 +79,11 @@ const AddExpenseModal = ({ isOpen, onClose,onExpenseAdded}) => {
     
               <select onChange={(e)=>setExpenseDetails({...expenseDetails,category:e.target.value})} className="input-field">
                 <option default selected disabled>Select Category</option>
-                <option value="Salary">Salary</option>
-                <option value="Events">Events</option>
-                <option value="Allowance">Allowance</option>
-                <option value="Lodging Expenses">Lodging Expenses</option>
-                <option value="Purchase">Purchase</option>
-                <option value="Utility">Utility</option>
-                <option value="Fixed Assets">Fixed Assets</option>
-                <option value="Consumables">Consumables</option>
-                <option value="Promotions">Promotions</option>
-                <option value="Repairs & Maintenance">Repairs & Maintenance</option>
-                <option value="Travel Expense">Travel Expense</option>
-                <option value="Food & refreshments">Food & refreshments</option>
-                <option value="Legal complainces">Legal complainces</option>
-                <option value="Tax">Tax</option>
-                <option value="GST">GST</option>
-                <option value="Consultation & Outsourcing">Consultation & Outsourcing</option>
-                <option value="Incentive">Incentive</option>
+                {expenseCategories.map((category) => (
+    <option key={category} value={category}>
+      {category}
+    </option>
+  ))}
 
 
 
@@ -103,11 +91,11 @@ const AddExpenseModal = ({ isOpen, onClose,onExpenseAdded}) => {
     
               <select onChange={(e)=>setExpenseDetails({...expenseDetails,type:e.target.value})} className="input-field">
               <option default selected disabled>Select Type</option>
-                <option value="Tech">Tech</option>
-                <option value="Business Development">Business Development</option>
-                <option value="Operations & Administration">Operations & Administration</option>
-                <option value="Services">Services</option>
-                <option value="Office Expense">Office Expense</option>
+              {departmentOptions.map((options) => (
+                            <option key={options} value={options}>
+                              {options}
+                            </option>
+                          ))}
     
               </select>
             </div>
@@ -115,17 +103,20 @@ const AddExpenseModal = ({ isOpen, onClose,onExpenseAdded}) => {
             <div>
               <select onChange={(e)=>setExpenseDetails({...expenseDetails,service:e.target.value})} className="input-field">
               <option default selected disabled>Select Service</option>
-                <option value="AR School">AR School</option>
-                <option value="Happy Moves">Happy Moves</option>
-                <option value="General">General</option>
+              {serviceOptions.map((options) => (
+                            <option key={options} value={options}>
+                              {options}
+                            </option>
+                          ))}
               </select>
     
               <select onChange={(e)=>setExpenseDetails({...expenseDetails,source:e.target.value})} className="input-field">
               <option default selected disabled>Source</option>
-                <option value="Oqulix HDFC">Oqulix HDFC</option>
-                <option value="Anjana Ramesh">Anjana Ramesh</option>
-                <option value="Sandeep Pattena">Sandeep Pattena</option>
-                <option value="Vishnuprakash">Vishnuprakash</option>
+              {sourceOptions.map((options) => (
+                            <option key={options} value={options}>
+                              {options}
+                            </option>
+                          ))}
     
               </select>
     
