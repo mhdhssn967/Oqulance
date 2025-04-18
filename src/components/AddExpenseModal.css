@@ -15,11 +15,7 @@
     height: fit-content;
     text-align: center;
   }
-  .Toastify__toast-container--top-center {
-    top: 30% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-  }
+ 
   
   /* Modal Heading */
   .modal-content h2 {
@@ -51,6 +47,7 @@
     display: flex;
     justify-content: right;
     margin-top: 10px;
+    width: 77vw;
   }
   
   /* Buttons */

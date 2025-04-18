@@ -6,9 +6,8 @@ import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
 import { auth, db } from '../firebaseConfig'
 import edit from '../assets/edit.png'
 import deleteImg from '../assets/delete.png'
-import insightImg from '../assets/exp.png'
-import close from '../assets/close.png'
 import { Link } from 'react-router-dom'
+import Swal from "sweetalert2";
 import { deleteData } from '../services/services'
 
 const ExpenseTable = () => {
@@ -19,9 +18,39 @@ const ExpenseTable = () => {
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [monthlyTotal, setMonthlyTotal] = useState(0)
   const [monthlyTotalRevenue, setMonthlyTotalRevenue] = useState(0)
+  const [editData, setEditData]=useState(false)
   const [view, setView] = useState("all")
-  
+
+  const [editRowId, setEditRowId] = useState(null); // stores the ID of the row being edited
+  const [editRowData, setEditRowData] = useState({}); // stores editable data
+
   const [triggerFetch, setTriggerFetch] = useState(false);
+
+  const saveEditedExpense = async (id) => {
+  try {
+    await updateDoc(doc(db, "expenses", id), editRowData); // or however you're storing
+    Swal.fire({
+      icon: "success",
+      title: "✔️ Expense Updated!",
+      showConfirmButton: false,
+      timer: 800
+    });
+    setEditRowId(null);
+  } catch (error) {
+    console.error("Error updating expense:", error);
+  }
+};
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditValues(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSave = () => {
+    // Your update logic here (e.g., Firebase update)
+    setEditingId(null); 
+  };
 
   useEffect(() => {
     const total = expenses.reduce((sum, expense) => sum + Number(expense.amount || 0), 0);
@@ -99,7 +128,12 @@ const ExpenseTable = () => {
     if (confirmDelete) {
       try {
         await deleteData(type,id);
-        alert("Expense deleted successfully!");
+        Swal.fire({
+                icon: 'success',
+                title: `✔️ ${type} Deleted!`,
+                showConfirmButton: false,
+                timer: 800,
+              });
         setTriggerFetch((prev) => !prev);
       } catch (error) {
         alert("Failed to delete expense.");
@@ -153,26 +187,86 @@ const ExpenseTable = () => {
             <th>Actions</th>
           </thead>
           <tbody>
-            {expenses.length > 0 ? (
-              expenses.map((expense, index) => (
-                <tr key={expense.id}>
-                  <td>{index + 1}</td>
-                  <td>{expense.date || "N/A"}</td>
-                  <td>{expense.category || "N/A"}</td>
-                  <td>{expense.type || "N/A"}</td>
-                  <td>{expense.service || "N/A"}</td>
-                  <td>{expense.source || "N/A"}</td>
-                  <td>₹{expense.amount || "0"}</td>
-                  <td>{expense.remarks || "N/A"}</td>
-                  <td className='actionCell'><img src={edit} alt=""  /> <img onClick={()=>handleDeleteData('expenses',expense.id)} src={deleteImg} alt="" /></td>
-                </tr>))) :
-              (
-                <tr>
-                  <td colSpan="8" style={{ textAlign: 'center' }}>No record found</td>
-                </tr>
-              )
-            }
-          </tbody>
+          {expenses.map((expense, index) => (
+  <tr key={expense.id}>
+    <td>{index + 1}</td>
+    
+    {editRowId === expense.id ? (
+      <div className='edit-row'>
+        <td><input type="date" value={editRowData.date} onChange={(e)=>setEditRowData({...editRowData, date: e.target.value})} /></td>
+        <td>
+          <select value={editRowData.category} onChange={(e)=>setEditRowData({...editRowData, category: e.target.value})}>
+                <option value="">Select</option>
+                <option value="Salary">Salary</option>
+                <option value="Events">Events</option>
+                <option value="Allowance">Allowance</option>
+                <option value="Lodging Expenses">Lodging Expenses</option>
+                <option value="Purchase">Purchase</option>
+                <option value="Utility">Utility</option>
+                <option value="Fixed Assets">Fixed Assets</option>
+                <option value="Consumables">Consumables</option>
+                <option value="Promotions">Promotions</option>
+                <option value="Repairs & Maintenance">Repairs & Maintenance</option>
+                <option value="Travel Expense">Travel Expense</option>
+                <option value="Food & refreshments">Food & refreshments</option>
+                <option value="Legal complainces">Legal compliances</option>
+          </select>
+        </td>
+        <td>
+          <select value={editRowData.type} onChange={(e)=>setEditRowData({...editRowData, type: e.target.value})}>
+                <option value="">Select</option>
+                <option value="Tech">Tech</option>
+                <option value="Business Development">Business Development</option>
+                <option value="Operations & Administration">Operations & Administration</option>
+                <option value="Services">Services</option>
+                <option value="Office Expense">Office Expense</option>
+          </select>
+        </td>
+        <td><select value={editRowData.service} onChange={(e)=>setEditRowData({...editRowData, service: e.target.value})} >
+        <option default selected disabled>Select Service</option>
+                <option value="AR School">AR School</option>
+                <option value="Happy Moves">Happy Moves</option>
+                <option value="General">General</option>
+              </select>
+        </td>
+        <td><select value={editRowData.source} onChange={(e)=>setEditRowData({...editRowData, source: e.target.value})} >
+        <option default selected disabled>Source</option>
+                <option value="Oqulix HDFC">Oqulix HDFC</option>
+                <option value="Anjana Ramesh">Anjana Ramesh</option>
+                <option value="Sandeep Pattena">Sandeep Pattena</option>
+                <option value="Vishnuprakash">Vishnuprakash</option>
+    
+              </select>
+        </td>
+        <td><input type="number" value={editRowData.amount} onChange={(e)=>setEditRowData({...editRowData, amount: e.target.value})} /></td>
+        <td><input type="text" value={editRowData.remarks} onChange={(e)=>setEditRowData({...editRowData, remarks: e.target.value})} /></td>
+        <td>
+          <button onClick={() => saveEditedExpense(expense.id)}>Save</button>
+          <button onClick={() => setEditRowId(null)}>Cancel</button>
+        </td>
+      </div>
+    ) : (
+      <>
+        <td>{expense.date || "N/A"}</td>
+        <td>{expense.category || "N/A"}</td>
+        <td>{expense.type || "N/A"}</td>
+        <td>{expense.service || "N/A"}</td>
+        <td>{expense.source || "N/A"}</td>
+        <td>₹{expense.amount || "0"}</td>
+        <td>{expense.remarks || "N/A"}</td>
+        <td className='actionCell'>
+          <img onClick={() => {
+            setEditRowId(expense.id);
+            setEditRowData(expense);
+          }} src={edit} alt="Edit" />
+          <img onClick={() => handleDeleteData('expenses', expense.id)} src={deleteImg} alt="Delete" />
+        </td>
+      </>
+    )}
+  </tr>
+))}
+
+</tbody>
         </table>
         </div>)}
   
