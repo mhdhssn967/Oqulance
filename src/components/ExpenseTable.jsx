@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './expenseTable.css'
 import AddExpense from './AddExpense'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
+import { collection, doc, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore'
 import { auth, db } from '../firebaseConfig'
 import edit from '../assets/edit.png'
 import deleteImg from '../assets/delete.png'
@@ -27,30 +26,24 @@ const ExpenseTable = () => {
   const [triggerFetch, setTriggerFetch] = useState(false);
 
   const saveEditedExpense = async (id) => {
-  try {
-    await updateDoc(doc(db, "expenses", id), editRowData); // or however you're storing
-    Swal.fire({
-      icon: "success",
-      title: "✔️ Expense Updated!",
-      showConfirmButton: false,
-      timer: 800
-    });
-    setEditRowId(null);
-  } catch (error) {
-    console.error("Error updating expense:", error);
-  }
-};
-
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditValues(prev => ({ ...prev, [name]: value }));
+    const userId = auth.currentUser.uid; // assuming Firebase Auth is being used
+    try {
+      await updateDoc(doc(db, "users", userId, "expenses", id), editRowData);
+      setTriggerFetch((prev) => !prev);
+      Swal.fire({
+        icon: "success",
+        title: "✔️ Expense Updated!",
+        showConfirmButton: false,
+        timer: 800
+      });
+      setEditRowId(null); 
+      
+    } catch (error) {
+      console.error("Error updating expense:", error);
+    }
   };
 
-  const handleSave = () => {
-    // Your update logic here (e.g., Firebase update)
-    setEditingId(null); 
-  };
+
 
   useEffect(() => {
     const total = expenses.reduce((sum, expense) => sum + Number(expense.amount || 0), 0);
@@ -192,8 +185,8 @@ const ExpenseTable = () => {
     <td>{index + 1}</td>
     
     {editRowId === expense.id ? (
-      <div className='edit-row'>
-        <td><input type="date" value={editRowData.date} onChange={(e)=>setEditRowData({...editRowData, date: e.target.value})} /></td>
+      <>
+        <td><input className='edit-input' type="date" value={editRowData.date} onChange={(e)=>setEditRowData({...editRowData, date: e.target.value})} /></td>
         <td>
           <select value={editRowData.category} onChange={(e)=>setEditRowData({...editRowData, category: e.target.value})}>
                 <option value="">Select</option>
@@ -210,6 +203,8 @@ const ExpenseTable = () => {
                 <option value="Travel Expense">Travel Expense</option>
                 <option value="Food & refreshments">Food & refreshments</option>
                 <option value="Legal complainces">Legal compliances</option>
+                <option value="Tax & GST">Tax & GST</option>
+
           </select>
         </td>
         <td>
@@ -238,13 +233,13 @@ const ExpenseTable = () => {
     
               </select>
         </td>
-        <td><input type="number" value={editRowData.amount} onChange={(e)=>setEditRowData({...editRowData, amount: e.target.value})} /></td>
-        <td><input type="text" value={editRowData.remarks} onChange={(e)=>setEditRowData({...editRowData, remarks: e.target.value})} /></td>
-        <td>
-          <button onClick={() => saveEditedExpense(expense.id)}>Save</button>
-          <button onClick={() => setEditRowId(null)}>Cancel</button>
+        <td><input className='edit-input' type="number" value={editRowData.amount} onChange={(e)=>setEditRowData({...editRowData, amount: e.target.value})} /></td>
+        <td><input className='edit-input' type="text" value={editRowData.remarks} onChange={(e)=>setEditRowData({...editRowData, remarks: e.target.value})} /></td>
+        <td className='edit-btns'>
+          <button className='edit-btn' onClick={() => saveEditedExpense(expense.id)}><i className="fa-solid fa-check"></i></button>
+          <button className='edit-btn' onClick={() => setEditRowId(null)}><i className="fa-solid fa-xmark"></i></button>
         </td>
-      </div>
+      </>
     ) : (
       <>
         <td>{expense.date || "N/A"}</td>

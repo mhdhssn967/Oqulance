@@ -57,7 +57,12 @@ const AddExpenseModal = ({ isOpen, onClose,onExpenseAdded}) => {
       onExpenseAdded()
     }catch(error){
       console.log("Error while adding expense",error);
-      alert("Failed to add response")
+      Swal.fire({
+        icon: 'error',
+        title: '❌ Error Adding Expense',
+        showConfirmButton: false,
+        timer: 800,
+      });
     }
   }
 
@@ -87,6 +92,8 @@ const AddExpenseModal = ({ isOpen, onClose,onExpenseAdded}) => {
                 <option value="Travel Expense">Travel Expense</option>
                 <option value="Food & refreshments">Food & refreshments</option>
                 <option value="Legal complainces">Legal complainces</option>
+                <option value="Tax & GST">Tax & GST</option>
+
               </select>
     
               <select onChange={(e)=>setExpenseDetails({...expenseDetails,type:e.target.value})} className="input-field">

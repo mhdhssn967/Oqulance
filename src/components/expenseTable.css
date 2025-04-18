@@ -97,3 +97,21 @@ table tr{
 .insightButtons table tr{
     background: none;
 }
+.edit-row input{
+    background-color: black;
+}
+.edit-input{
+    background-color: black;
+}
+.edit-btn{
+    background-color: black;
+}
+.edit-btns button{
+    margin: 0% 6%;
+    cursor: pointer;
+}
+.edit-btns{
+    display: flex;
+    justify-content: center;
+    margin-top: 14px;
+}
