@@ -205,6 +205,8 @@ const ExpenseTable = () => {
                 <option value="Legal complainces">Legal compliances</option>
                 <option value="Tax & GST">Tax & GST</option>
                 <option value="Consultation & Outsourcing">Consultation & Outsourcing</option>
+                <option value="Incentive">Incentive</option>
+
           </select>
         </td>
         <td>
