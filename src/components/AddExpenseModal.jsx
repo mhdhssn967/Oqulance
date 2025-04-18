@@ -93,6 +93,8 @@ const AddExpenseModal = ({ isOpen, onClose,onExpenseAdded}) => {
                 <option value="Food & refreshments">Food & refreshments</option>
                 <option value="Legal complainces">Legal complainces</option>
                 <option value="Tax & GST">Tax & GST</option>
+                <option value="Consultation & Outsourcing">Consultation & Outsourcing</option>
+
 
               </select>
     
