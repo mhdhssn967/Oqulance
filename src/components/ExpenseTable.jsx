@@ -12,12 +12,15 @@ import { deleteData } from '../services/services'
 const ExpenseTable = () => {
 
   const [expenses, setExpenses] = useState([])
+
+  const [displayExpenses, setDisplayExpenses]=useState([]) //Display data
+  const [displayRevenue, setDisplayRevenue]=useState([]) // Display data
+  
   const [revenue, setRevenue] = useState([])
   const [revenueTotal, setRevenueTotal] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [monthlyTotal, setMonthlyTotal] = useState(0)
   const [monthlyTotalRevenue, setMonthlyTotalRevenue] = useState(0)
-  const [editData, setEditData]=useState(false)
   const [view, setView] = useState("all")
 
   const [editRowId, setEditRowId] = useState(null); // stores the ID of the row being edited
@@ -101,8 +104,10 @@ const ExpenseTable = () => {
 
         // console.log("Fetched expenses:", expensesList);
         setExpenses(expensesList);
+        setDisplayExpenses(expensesList)
         // console.log("Fetched revenue:", revenueList);
         setRevenue(revenueList);
+        setDisplayRevenue(revenueList)
       } catch (error) {
         console.error("Error fetching expenses:", error);
       }
@@ -180,7 +185,7 @@ const ExpenseTable = () => {
             <th>Actions</th>
           </thead>
           <tbody>
-          {expenses.map((expense, index) => (
+          {displayExpenses.map((expense, index) => (
   <tr key={expense.id}>
     <td>{index + 1}</td>
     
@@ -203,7 +208,8 @@ const ExpenseTable = () => {
                 <option value="Travel Expense">Travel Expense</option>
                 <option value="Food & refreshments">Food & refreshments</option>
                 <option value="Legal complainces">Legal compliances</option>
-                <option value="Tax & GST">Tax & GST</option>
+                <option value="Tax">Tax</option>
+                <option value="GST">GST</option>
                 <option value="Consultation & Outsourcing">Consultation & Outsourcing</option>
                 <option value="Incentive">Incentive</option>
 
@@ -287,8 +293,8 @@ const ExpenseTable = () => {
               </thead>
               <tbody>
               {
-      revenue.length> 0 && (
-        revenue.map((revenue, index)=>(
+      displayRevenue.length> 0 && (
+        displayRevenue.map((revenue, index)=>(
           <tr key={revenue.id}>
             <td>{index + 1}</td>
           <td>{revenue.date || "N/A"}</td>
