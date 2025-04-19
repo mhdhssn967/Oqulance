@@ -1,7 +1,7 @@
 .settingsPage{
     background-color: black;
     padding: 3%;
-    width: 20vw;
+    border: solid;
 }
 .companyNameBox{
     margin-left: 15px;

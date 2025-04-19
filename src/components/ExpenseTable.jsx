@@ -207,50 +207,39 @@ const ExpenseTable = ({ expenseCategories,departmentOptions, serviceOptions, sou
           <td><input className='edit-input' type="date" value={editRowData.date} onChange={(e)=>setEditRowData({...editRowData, date: e.target.value})} /></td>
           <td>
             <select value={editRowData.category} onChange={(e)=>setEditRowData({...editRowData, category: e.target.value})}>
-                  <option value="">Select</option>
-                  <option value="Salary">Salary</option>
-                  <option value="Events">Events</option>
-                  <option value="Allowance">Allowance</option>
-                  <option value="Lodging Expenses">Lodging Expenses</option>
-                  <option value="Purchase">Purchase</option>
-                  <option value="Utility">Utility</option>
-                  <option value="Fixed Assets">Fixed Assets</option>
-                  <option value="Consumables">Consumables</option>
-                  <option value="Promotions">Promotions</option>
-                  <option value="Repairs & Maintenance">Repairs & Maintenance</option>
-                  <option value="Travel Expense">Travel Expense</option>
-                  <option value="Food & refreshments">Food & refreshments</option>
-                  <option value="Legal complainces">Legal compliances</option>
-                  <option value="Tax">Tax</option>
-                  <option value="GST">GST</option>
-                  <option value="Consultation & Outsourcing">Consultation & Outsourcing</option>
-                  <option value="Incentive">Incentive</option>
+            {expenseCategories.map((category) => (
+    <option key={category} value={category}>
+      {category}
+    </option>
+  ))}
   
             </select>
           </td>
           <td>
             <select value={editRowData.type} onChange={(e)=>setEditRowData({...editRowData, type: e.target.value})}>
                   <option value="">Select</option>
-                  <option value="Tech">Tech</option>
-                  <option value="Business Development">Business Development</option>
-                  <option value="Operations & Administration">Operations & Administration</option>
-                  <option value="Services">Services</option>
-                  <option value="Office Expense">Office Expense</option>
+                  {departmentOptions.map((options) => (
+                            <option key={options} value={options}>
+                              {options}
+                            </option>
+                          ))}
             </select>
           </td>
           <td><select value={editRowData.service} onChange={(e)=>setEditRowData({...editRowData, service: e.target.value})} >
           <option default selected disabled>Select Service</option>
-                  <option value="AR School">AR School</option>
-                  <option value="Happy Moves">Happy Moves</option>
-                  <option value="General">General</option>
+          {serviceOptions.map((options) => (
+                            <option key={options} value={options}>
+                              {options}
+                            </option>
+                          ))}
                 </select>
           </td>
           <td><select value={editRowData.source} onChange={(e)=>setEditRowData({...editRowData, source: e.target.value})} >
-          <option default selected disabled>Source</option>
-                  <option value="Oqulix HDFC">Oqulix HDFC</option>
-                  <option value="Anjana Ramesh">Anjana Ramesh</option>
-                  <option value="Sandeep Pattena">Sandeep Pattena</option>
-                  <option value="Vishnuprakash">Vishnuprakash</option>
+          {sourceOptions.map((options) => (
+                            <option key={options} value={options}>
+                              {options}
+                            </option>
+                          ))}
       
                 </select>
           </td>
@@ -298,7 +287,6 @@ const ExpenseTable = ({ expenseCategories,departmentOptions, serviceOptions, sou
                 <thead>
                 <th>#</th>
                   <th>Date</th>
-                  <th>Type</th>
                   <th>Service</th>
                   <th>Amount</th>
                   <th>Remarks</th>
@@ -311,7 +299,6 @@ const ExpenseTable = ({ expenseCategories,departmentOptions, serviceOptions, sou
             <tr key={revenue.id}>
               <td>{index + 1}</td>
             <td>{revenue.date || "N/A"}</td>
-            <td>{revenue.type || "N/A"}</td>
             <td>{revenue.service || "N/A"}</td>
             <td>₹{revenue.amount || "0"}</td>
             <td>{revenue.remarks || "N/A"}</td>

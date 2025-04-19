@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import "./AddExpenseModal.css"; 
 import { auth, db } from "../firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import './AddRevenueModal.css'
+import Swal from "sweetalert2";
 
-const AddRevenueModal = ({ isOpen, onClose,onExpenseAdded}) => {
+const AddRevenueModal = ({ isOpen, onClose,onExpenseAdded, serviceOptions}) => {
   if (!isOpen) return null;
 
-  const [revenueDetails, setRevenueDetails]=useState({date:"",type:"",service:"",amount:"",remarks:""})
+  const [revenueDetails, setRevenueDetails]=useState({date:"",service:"",amount:"",remarks:""})
   console.log(revenueDetails);
   
   const closeModal=()=>{
-    setRevenueDetails({date:"",type:"",service:"",amount:"",remarks:""})
+    setRevenueDetails({date:"",service:"",amount:"",remarks:""})
     onClose()
   }
 
@@ -25,9 +26,9 @@ const AddRevenueModal = ({ isOpen, onClose,onExpenseAdded}) => {
       return;
     }
 
-    const {date,type,service,amount,remarks}=revenueDetails
+    const {date,service,amount,remarks}=revenueDetails
 
-    if (!date || !type || !service || !amount || !remarks) {
+    if (!date || !service || !amount ) {
       alert("Fill the form completely");
       return;
     }
@@ -37,13 +38,18 @@ const AddRevenueModal = ({ isOpen, onClose,onExpenseAdded}) => {
       await addDoc(revenueRef,{
         userID:user.uid,
         date,
-        type,
         service,
         amount,
         remarks,
         createdAt: new Date(),
       });
       onClose()
+      Swal.fire({
+              icon: 'success',
+              title: '✔️ Revenue Added!',
+              showConfirmButton: false,
+              timer: 800,
+            });
       onExpenseAdded()
     }catch(error){
       console.log("Error while adding revenue",error);
@@ -55,22 +61,19 @@ const AddRevenueModal = ({ isOpen, onClose,onExpenseAdded}) => {
     <div className="modal-overlay">
       <div className="modal-content">
         <h2>Add New Revenue</h2>
-        <form className="expense-form">
+        <form className="revenue-form">
           <input onChange={(e)=>setRevenueDetails({...revenueDetails,date:e.target.value})} type="date" className="input-field" />
-
-          <select onChange={(e)=>setRevenueDetails({...revenueDetails,type:e.target.value})} className="input-field">
-          <option default selected disabled>Select Type</option>
-            <option value="Tech">Tech</option>
-            <option value="Sales & Marketing">Sales & Marketing</option>
-            <option value="Services">Services</option>
-          </select>
 
           <select onChange={(e)=>setRevenueDetails({...revenueDetails,service:e.target.value})} className="input-field">
           <option default selected disabled>Select Service</option>
-            <option value="Utility">Utility</option>
-            <option value="AR School">AR School</option>
-            <option value="Happy Moves">Happy Moves</option>
+          <option default selected disabled>Select Service</option>
+              {serviceOptions.map((options) => (
+                            <option key={options} value={options}>
+                              {options}
+                            </option>
+                          ))}
           </select>
+
 
           <input onChange={(e)=>setRevenueDetails({...revenueDetails,amount:e.target.value})} type="number" placeholder="Amount" className="input-field" />
           <input onChange={(e)=>setRevenueDetails({...revenueDetails,remarks:e.target.value})} type="text" placeholder="Remarks" className="input-field" />

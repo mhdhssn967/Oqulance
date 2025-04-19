@@ -17,7 +17,7 @@ const AddExpense = ({onExpenseAdded,expenseCategories,departmentOptions, service
       <button className='add' onClick={() => setRevenueModalOpen(true)} style={{width:'180px',height:'20px'}}> <img style={{width:'20px',marginRight:'5px'}} src={revenueImg} alt="" /> Add New Revenue</button>
       </div>
       <AddExpenseModal onExpenseAdded={onExpenseAdded} isOpen={expenseModalOpen} expenseCategories={expenseCategories} departmentOptions={departmentOptions} serviceOptions={serviceOptions} sourceOptions={sourceOptions} onClose={() => setExpenseModalOpen(false)} />
-      <AddRevenueModal onExpenseAdded={onExpenseAdded} isOpen={revenueModalOpen} onClose={() => setRevenueModalOpen(false)}/>
+      <AddRevenueModal onExpenseAdded={onExpenseAdded} isOpen={revenueModalOpen} serviceOptions={serviceOptions} onClose={() => setRevenueModalOpen(false)}/>
     </div>
     </>
   )
