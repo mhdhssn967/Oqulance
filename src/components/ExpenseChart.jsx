@@ -52,21 +52,21 @@ const ExpenseChart = () => {
         {(view=="expenses"||view=="all")&&
         (
         <div>
-          <div style={{ width: "80%", height: 300, color: 'black', margin: '2% 0% 5% 5%' }}>
+          <div style={{ width: "80%", color: 'black', margin: '2% 0% 5% 5%' }}>
             <h2>Expense Growth Over Time</h2>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={expenseDetails}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date" />
                 <Tooltip contentStyle={{ backgroundColor: 'black' }} />
-                <Line type="monotone" dataKey="amount" stroke="red" strokeWidth={2} />
+                <Line type="basis" dataKey="amount" stroke="red" strokeWidth={2} />
               </LineChart>
             </ResponsiveContainer>
           </div>
   
           {/* Bar Charts  Expenses */}
           {/* Expense by service */}
-          <div className="barCharts" style={{ width: "80%", height: 300, color: 'black', margin: '5%', display: 'flex' }}>
+          <div className="barCharts" style={{ width: "80%", height: 300, color: 'black', margin: '5%' }}>
             <ResponsiveContainer width="100%" height="100%" style={{ marginRight: '7%' }}>
               <h2>Expenses by Service</h2>
               <BarChart data={expenseByService}>
