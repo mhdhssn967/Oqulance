@@ -7,7 +7,7 @@ import edit from '../assets/edit.png'
 import deleteImg from '../assets/delete.png'
 import { Link } from 'react-router-dom'
 import Swal from "sweetalert2";
-import { deleteData, filterExpenses } from '../services/services'
+import { deleteData, filterExpenses, sortExpenses } from '../services/services'
 import Filters from './Filters'
 
 const ExpenseTable = ({ expenseCategories,departmentOptions, serviceOptions, sourceOptions }) => {
@@ -30,8 +30,8 @@ const ExpenseTable = ({ expenseCategories,departmentOptions, serviceOptions, sou
   const [triggerFetch, setTriggerFetch] = useState(false);
   const [filterValues, setFilterValues] = useState({categoryF:'All',typeF:'All',sourceF:'All',serviceF:'All'})
   const [searchText, setSearchText]=useState('')
+  const [sortBy, setSortBy]=useState('date')
   
-  console.log(filterValues);
   
 
   const saveEditedExpense = async (id) => {
@@ -146,6 +146,13 @@ const ExpenseTable = ({ expenseCategories,departmentOptions, serviceOptions, sou
       setDisplayExpenses(filtered);
     }, [expenses, filterValues, searchText]);
 
+    useEffect(()=>{
+        const sorted = sortExpenses(displayExpenses, sortBy);
+        setExpenses(sorted);
+    },[sortBy])
+
+   
+
     return (
       <>
         <div className='insightButtons'>
@@ -164,10 +171,14 @@ const ExpenseTable = ({ expenseCategories,departmentOptions, serviceOptions, sou
         <div style={{ display: 'flex', justifyContent: 'space-between', marginLeft: '100px', alignItems: 'center' }}><AddExpense onExpenseAdded={handleExpenseAdded} expenseCategories={expenseCategories} departmentOptions={departmentOptions} serviceOptions={serviceOptions} sourceOptions={sourceOptions}/></div>
 
         <div className='filter-container'>
-  <Filters expenseCategories={expenseCategories} departmentOptions={departmentOptions} serviceOptions={serviceOptions} sourceOptions={sourceOptions} filterValues={filterValues} setFilterValues={setFilterValues} setSearchText={setSearchText}/>
+  <Filters setSortBy={setSortBy} expenseCategories={expenseCategories} departmentOptions={departmentOptions} serviceOptions={serviceOptions} sourceOptions={sourceOptions} filterValues={filterValues} setFilterValues={setFilterValues} setSearchText={setSearchText}/>
 </div>
-        
-        
+<label style={{margin:'20px 5px 10px 20px'}}  htmlFor="view">View </label>
+        <select name="" id="view" onChange={(e)=>{setView(e.target.value)}}>
+          <option value='all'>All</option>
+          <option value='expenses'>Expenses</option>
+          <option value='revenue'>Revenue</option>
+        </select>
         
   {/* \Expense table */}
         

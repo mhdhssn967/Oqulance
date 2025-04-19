@@ -54,4 +54,25 @@ export const filterExpenses = (allExpenses, filters, searchText) => {
   });
 };
 
+// utils/sortExpenses.js
+
+export const sortExpenses = (expenses, sortBy) => {
+  if (!expenses || expenses.length === 0) return [];
+
+  return [...expenses].sort((a, b) => {
+    if (sortBy === "amount") {
+      return parseFloat(b.amount) - parseFloat(a.amount); // Descending
+    }
+
+    if (sortBy === "date" || sortBy === "createdAt") {
+      const dateA = a[sortBy]?.toDate ? a[sortBy].toDate() : new Date(a[sortBy]);
+      const dateB = b[sortBy]?.toDate ? b[sortBy].toDate() : new Date(b[sortBy]);
+      return dateB - dateA; // Descending by date
+    }
+
+    return 0;
+  });
+};
+
+
 

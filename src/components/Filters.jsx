@@ -1,7 +1,7 @@
 import React from 'react'
 import './Filters.css'
 
-const Filters = ({expenseCategories,departmentOptions, serviceOptions, sourceOptions, filterValues, setFilterValues, setSearchText}) => {
+const Filters = ({setSortBy, expenseCategories,departmentOptions, serviceOptions, sourceOptions, filterValues, setFilterValues, setSearchText}) => {
   return (
     <>
     <div className='filter-div'>
@@ -45,6 +45,12 @@ const Filters = ({expenseCategories,departmentOptions, serviceOptions, sourceOpt
                               {options}
                             </option>
                           ))}
+        </select>
+        <label htmlFor="sort-by">Sort By </label>
+        <select name="" id="sort-by" onChange={(e)=>setSortBy(e.target.value)}>
+          <option value='date' defaultValue>Date incurred</option>
+          <option value='amount'>Amount</option>
+          <option value='createdAt'>Date added</option>
         </select>
     </div>
     </>
