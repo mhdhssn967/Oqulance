@@ -15,9 +15,7 @@ const ExpenseChart = () => {
       console.log(view);
       
   const expenseDetails = useFetchExpenses(startDate,endDate); //Fetch Expense Details
-
   const revenueDetails = useFetchRevenue(startDate,endDate); //Fetch Revenue Details
-
   const expenseByService = processDataByService(expenseDetails)
   const expenseByType = processDataByType(expenseDetails)
   const expenseByCategory = processDataByCategory(expenseDetails)

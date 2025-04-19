@@ -11,42 +11,46 @@ const HomePage = () => {
     const [settingsView, setSettingsView] = useState(0)
 
     const expenseCategories = [
-      "Salary",
-      "Events",
       "Allowance",
-      "Lodging Expenses",
-      "Purchase",
-      "Utility",
-      "Fixed Assets",
-      "Consumables",
-      "Promotions",
-      "Repairs & Maintenance",
-      "Travel Expense",
-      "Food & refreshments",
-      "Legal complainces",
-      "Tax",
-      "GST",
       "Consultation & Outsourcing",
-      "Incentive"
+      "Consumables",
+      "Events",
+      "Fixed Assets",
+      "Food & refreshments",
+      "GST",
+      "Incentive",
+      "Legal complainces",
+      "Lodging Expenses",
+      "Promotions",
+      "Purchase",
+      "Repairs & Maintenance",
+      "Salary",
+      "Tax",
+      "Travel Expense",
+      "Utility"
     ];
+    
     const departmentOptions = [
-      "Tech",
       "Business Development",
+      "Office Expense",
       "Operations & Administration",
       "Services",
-      "Office Expense"
+      "Tech"
     ];
+    
     const serviceOptions = [
       "AR School",
-      "Happy Moves",
-      "General"
+      "General",
+      "Happy Moves"
     ];
+    
     const sourceOptions = [
-      "Oqulix HDFC",
       "Anjana Ramesh",
+      "Oqulix HDFC",
       "Sandeep Pattena",
       "Vishnuprakash"
     ];
+    
         
     
   return (
