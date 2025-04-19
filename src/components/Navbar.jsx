@@ -10,7 +10,7 @@ const Navbar = () => {
      <div className='navmain'>
         <div className='logo'>
           <img src={OQLogo} alt="Oqulix Logo" />
-          <h2 style={{color:'white',fontSize:'30px'}}>Oqulix</h2>
+          <h2 style={{color:'white',fontSize:'30px'}}>Oqulix Finance</h2>
         </div>
         </div>   
     </>

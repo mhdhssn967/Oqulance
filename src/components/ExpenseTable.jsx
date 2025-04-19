@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import Swal from "sweetalert2";
 import { deleteData, filterExpenses, sortExpenses } from '../services/services'
 import Filters from './Filters'
+import image from '../assets/image.png'
 
 const ExpenseTable = ({ expenseCategories,departmentOptions, serviceOptions, sourceOptions }) => {
 
@@ -34,14 +35,14 @@ const ExpenseTable = ({ expenseCategories,departmentOptions, serviceOptions, sou
   
   
 
-  const saveEditedExpense = async (id) => {
+  const saveEditedData = async (type,id) => {
     const userId = auth.currentUser.uid; // assuming Firebase Auth is being used
     try {
-      await updateDoc(doc(db, "users", userId, "expenses", id), editRowData);
+      await updateDoc(doc(db, "users", userId,type, id), editRowData);
       setTriggerFetch((prev) => !prev);
       Swal.fire({
         icon: "success",
-        title: "✔️ Expense Updated!",
+        title: `✔️ ${type} Updated!`,
         showConfirmButton: false,
         timer: 800
       });
@@ -129,7 +130,7 @@ const ExpenseTable = ({ expenseCategories,departmentOptions, serviceOptions, sou
         await deleteData(type, id);
         Swal.fire({
           icon: 'success',
-          title: `✔️ ${type} Deleted!`,
+          title: `✔️ ${type} deleted!`,
           showConfirmButton: false,
           timer: 800,
         });
@@ -156,30 +157,44 @@ const ExpenseTable = ({ expenseCategories,departmentOptions, serviceOptions, sou
     return (
       <>
         <div className='insightButtons'>
-            <table>
-             <table>
-                <tr><td>Total expense of this month</td> <td>: ₹{monthlyTotal}</td></tr>
-              <tr><td>Total revenue generated this month</td> <td>: ₹{monthlyTotalRevenue}</td></tr>
-                 <tr><td>Gross expenses:</td><td>: ₹{totalExpenses}</td></tr>
-                 <tr><td>Gross revenue:</td><td>: ₹{revenueTotal}</td></tr>
-                 <tr><td><Link to="/home/insights"><button> View more Insights</button></Link>
-                 </td></tr>
-             </table>
-            </table>
+               <table className='insight-table'>
+                  <tr>
+                    <td>Total expense of this month</td> 
+                    <td>: ₹{monthlyTotal}</td>
+                    <td>Total revenue generated this month</td>
+                    <td>: ₹{monthlyTotalRevenue}</td>
+                  </tr>
+                   <tr>
+                    <td>Gross expenses:</td>
+                    <td>: ₹{totalExpenses}</td>
+                    <td>Gross revenue:</td><td>: ₹{revenueTotal}</td>
+                  </tr>
+                   <tr>
+                    <td><Link to="/home/insights"><button> View more Insights</button></Link></td>
+                  </tr>
+               </table>
+               {/* <img src={image} alt=""  /> */}
+            
         </div>    
         
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginLeft: '100px', alignItems: 'center' }}><AddExpense onExpenseAdded={handleExpenseAdded} expenseCategories={expenseCategories} departmentOptions={departmentOptions} serviceOptions={serviceOptions} sourceOptions={sourceOptions}/></div>
-
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginLeft: '60px', alignItems: 'center' }}><AddExpense onExpenseAdded={handleExpenseAdded} expenseCategories={expenseCategories} departmentOptions={departmentOptions} serviceOptions={serviceOptions} sourceOptions={sourceOptions}/></div>
+        <div style={{display:'flex',alignItems:'center',width:'100vw',justifyContent:'center'}}>
+          <h1 style={{fontSize:'40px',textAlign:'center'}}>Your Financial Report</h1>
+          <div >
+            <label style={{margin:'20px 5px 10px 20px'}}  htmlFor="view">View </label>
+            <select name="" id="view" onChange={(e)=>{setView(e.target.value)}}>
+              <option value='all'>All</option>
+              <option value='expenses'>Expenses</option>
+              <option value='revenue'>Revenue</option>
+            </select>
+          </div>
+        </div>
         <div className='filter-container'>
   <Filters setSortBy={setSortBy} expenseCategories={expenseCategories} departmentOptions={departmentOptions} serviceOptions={serviceOptions} sourceOptions={sourceOptions} filterValues={filterValues} setFilterValues={setFilterValues} setSearchText={setSearchText}/>
 </div>
-<label style={{margin:'20px 5px 10px 20px'}}  htmlFor="view">View </label>
-        <select name="" id="view" onChange={(e)=>{setView(e.target.value)}}>
-          <option value='all'>All</option>
-          <option value='expenses'>Expenses</option>
-          <option value='revenue'>Revenue</option>
-        </select>
+
         
+      
   {/* \Expense table */}
         
           {(view=="all" || view=="expenses")&&(
@@ -187,15 +202,17 @@ const ExpenseTable = ({ expenseCategories,departmentOptions, serviceOptions, sou
           <h2>Expense Overview</h2>
           <table>
             <thead>
-              <th>#</th>
-              <th>Date</th>
-              <th>Category</th>
-              <th>Type</th>
-              <th>Service</th>
-              <th>Source</th>
-              <th>Amount</th>
-              <th>Remarks</th>
-              <th>Actions</th>
+              
+                <th>#</th>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Service</th>
+                <th>Source</th>
+                <th>Amount</th>
+                <th>Remarks</th>
+                <th>Actions</th>
+             
             </thead>
             <tbody>
             {displayExpenses.map((expense, index) => (
@@ -246,7 +263,7 @@ const ExpenseTable = ({ expenseCategories,departmentOptions, serviceOptions, sou
           <td><input className='edit-input' type="number" value={editRowData.amount} onChange={(e)=>setEditRowData({...editRowData, amount: e.target.value})} /></td>
           <td><input className='edit-input' type="text" value={editRowData.remarks} onChange={(e)=>setEditRowData({...editRowData, remarks: e.target.value})} /></td>
           <td className='edit-btns'>
-            <button className='edit-btn' onClick={() => saveEditedExpense(expense.id)}><i className="fa-solid fa-check"></i></button>
+            <button className='edit-btn' onClick={() => saveEditedData('expenses',expense.id)}><i className="fa-solid fa-check"></i></button>
             <button className='edit-btn' onClick={() => setEditRowId(null)}><i className="fa-solid fa-xmark"></i></button>
           </td>
         </>
@@ -280,38 +297,101 @@ const ExpenseTable = ({ expenseCategories,departmentOptions, serviceOptions, sou
   {/* Revenue Table */}
   
   
-  {(view=="revenue" || view=="all") &&
-            <div className='tableDiv'>
-              <h2>Revenue Overview</h2>
-              <table>
-                <thead>
-                <th>#</th>
-                  <th>Date</th>
-                  <th>Service</th>
-                  <th>Amount</th>
-                  <th>Remarks</th>
-                  <th>Actions</th>
-                </thead>
-                <tbody>
-                {
-        displayRevenue.length> 0 && (
-          displayRevenue.map((revenue, index)=>(
-            <tr key={revenue.id}>
-              <td>{index + 1}</td>
-            <td>{revenue.date || "N/A"}</td>
-            <td>{revenue.service || "N/A"}</td>
-            <td>₹{revenue.amount || "0"}</td>
-            <td>{revenue.remarks || "N/A"}</td>
-            <td className='actionCell'><img src={edit} alt="" /> <img onClick={()=>handleDeleteData('revenue',revenue.id)} src={deleteImg} alt="" /></td>
-            </tr>
-          ))
-        )
-      }
-    
-                </tbody>
-              </table>
-            </div>
-  }
+  {(view == "revenue" || view == "all") && (
+  <div className='tableDiv'>
+    <h2>Revenue Overview</h2>
+    <table>
+      <thead>
+       
+          <th>#</th>
+          <th>Date</th>
+          <th>Service</th>
+          <th>Amount</th>
+          <th>Remarks</th>
+          <th>Actions</th>
+        
+      </thead>
+      <tbody>
+        {displayRevenue.length > 0 && displayRevenue.map((revenue, index) => (
+          <tr key={revenue.id}>
+            <td>{index + 1}</td>
+
+            {editRowId === revenue.id ? (
+              <>
+                <td>
+                  <input
+                    className='edit-input'
+                    type="date"
+                    value={editRowData.date}
+                    onChange={(e) => setEditRowData({ ...editRowData, date: e.target.value })}
+                  />
+                </td>
+                <td>
+                  <select
+                    value={editRowData.service}
+                    onChange={(e) => setEditRowData({ ...editRowData, service: e.target.value })}
+                  >
+                    <option disabled>Select Service</option>
+                    {serviceOptions.map((service) => (
+                      <option key={service} value={service}>{service}</option>
+                    ))}
+                  </select>
+                </td>
+                <td>
+                  <input
+                    className='edit-input'
+                    type="number"
+                    value={editRowData.amount}
+                    onChange={(e) => setEditRowData({ ...editRowData, amount: e.target.value })}
+                  />
+                </td>
+                <td>
+                  <input
+                    className='edit-input'
+                    type="text"
+                    value={editRowData.remarks}
+                    onChange={(e) => setEditRowData({ ...editRowData, remarks: e.target.value })}
+                  />
+                </td>
+                <td className='edit-btns'>
+                  <button className='edit-btn' onClick={() => saveEditedData('revenue', revenue.id)}>
+                    <i className="fa-solid fa-check"></i>
+                  </button>
+                  <button className='edit-btn' onClick={() => setEditRowId(null)}>
+                    <i className="fa-solid fa-xmark"></i>
+                  </button>
+                </td>
+              </>
+            ) : (
+              <>
+                <td>{revenue.date || "N/A"}</td>
+                <td>{revenue.service || "N/A"}</td>
+                <td>₹{revenue.amount || "0"}</td>
+                <td>{revenue.remarks || "N/A"}</td>
+                <td className='actionCell'>
+                  <img
+                    onClick={() => {
+                      setEditRowId(revenue.id);
+                      setEditRowData(revenue);
+                    }}
+                    src={edit}
+                    alt="Edit"
+                  />
+                  <img
+                    onClick={() => handleDeleteData('revenue', revenue.id)}
+                    src={deleteImg}
+                    alt="Delete"
+                  />
+                </td>
+              </>
+            )}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}
+
       </>
     )
   }

@@ -4,7 +4,7 @@
   .modal-content {
     border: solid white 0.5px;
     background: #222;
-    margin: 20px;
+    margin: 20px auto;
     padding: 20px;
     box-shadow: 0px 0px 30px black;
     width: 80vw;
